@@ -1,0 +1,97 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hni-growth-engine
+  datasource:
+    url: jdbc:mysql://localhost:3307/hni_growth_engine?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+  mail:
+    # Real SMTP config for actually sending outreach emails (project requirement:
+    # send via vardhan.chippada@webisdom.ai). Never commit real SMTP credentials --
+    # set these via environment variables.
+    host: ${SMTP_HOST:smtp.gmail.com}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        transport:
+          protocol: smtp
+
+app:
+  mail:
+    # The "From" address outreach emails are sent as. Defaults to the address the
+    # sales lead specified; override via env var if that ever changes.
+    from-address: ${MAIL_FROM_ADDRESS:}
+    from-name: ${MAIL_FROM_NAME:}
+    # When true (default until real SMTP creds are set), email sends are logged
+    # and recorded as mock-sent instead of actually dispatched -- same pattern as
+    # linkedin.api.mock-mode. Set false once spring.mail.* above is configured.
+    mock-mode: ${MAIL_MOCK_MODE:false}
+  whatsapp:
+    # WhatsApp Business Cloud API (Meta) placeholders. TODO(integration): fill in
+    # once a WhatsApp Business account + Cloud API app is provisioned. See
+    # https://developers.facebook.com/docs/whatsapp/cloud-api for setup.
+    base-url: ${WHATSAPP_BASE_URL:https://graph.facebook.com/v20.0}
+    phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:}
+    access-token: ${WHATSAPP_ACCESS_TOKEN:}
+    mock-mode: ${WHATSAPP_MOCK_MODE:true}
+  jwt:
+    # Base64-encoded 256-bit secret. Override in production via APP_JWT_SECRET.
+    secret: ${APP_JWT_SECRET:}
+    expiration-ms: 86400000        # 24 hours
+  ai:
+    provider: ${AI_PROVIDER:openai}
+    base-url: ${AI_BASE_URL:}
+    # Same as above: no committed default for a real secret. Set AI_API_KEY in your
+    # environment / .env (see README) before enabling live AI generation.
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:}
+  seed:
+    # Seed a default ADMIN user on first startup
+    enabled: true
+    admin-email: admin@hnigrowth.com
+    admin-password: Admin@123
+    
+
+
+linkedin:
+  api:
+    # Linked API (linkedapi.io). base-url is normally https://api.linkedapi.io
+    # api-key -> sent as the "linked-api-token" header
+    # account-id -> sent as the "identification-token" header (per connected LinkedIn account)
+    base-url: ${LINKEDIN_BASE_URL:https://api.linkedapi.io}
+    # No fallback values here on purpose -- these are real credentials and must only ever
+    # come from the environment (or a secrets manager), never be committed in application.yml.
+    api-key: ${LINKEDIN_API_KEY:}
+    account-id: ${LINKEDIN_ACCOUNT_ID:}
+    # NOTE: a Spring property placeholder default is taken literally, so
+    # ${LINKEDIN_WORKFLOW_ID:""} used to resolve to the two-character string `""`
+    # (quote-quote) rather than an actually-empty value when the env var was unset.
+    workflow-id: ${LINKEDIN_WORKFLOW_ID:""}
+    mock-mode: ${LINKEDIN_MOCK_MODE:false}
+
+
+logging:
+  level:
+    com.hnigrowth: INFO
+
+
+
