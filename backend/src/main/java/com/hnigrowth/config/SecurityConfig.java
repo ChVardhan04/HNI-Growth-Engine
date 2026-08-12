@@ -66,7 +66,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000", "https://hni-growth-engine.vercel.app"));
+        config.setAllowedOrigins(List.of("https://hni-growth-engine-cj3423ov2-chvardhan04s-projects.vercel.app", "https://hni-growth-engine-git-main-chvardhan04s-projects.vercel.app", "https://hni-growth-engine.vercel.app"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
