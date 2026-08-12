@@ -5,9 +5,9 @@ spring:
   application:
     name: hni-growth-engine
   datasource:
-    url: ${DB_URL:jdbc:mysql://mysql-16726c48-vardhanchippada04-210c.aivencloud.com:23552/defaultdb?ssl-mode=REQUIRED}
-    username: ${DB_USERNAME:}
-    password: ${DB_PASSWORD:}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
