@@ -8,9 +8,7 @@ recommends next actions, routes advisors, and automates CRM/audit workflows.
 Backend: **Java 21 · Spring Boot 3 · Spring Security (JWT) · Spring Data JPA · MySQL · Lombok · Maven**
 Frontend: **React · Vite · Bootstrap 5 · Axios · React Router · Recharts**
 
-> ⚠️ This project was authored in an offline sandbox, so `mvn` and `npm install`
-> could not be run there to verify the build. The code is written to compile and
-> run; follow the steps below in your own environment.
+
 
 ---
 
